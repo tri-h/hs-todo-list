@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --font-sans: "Geist", sans-serif;
+      --font-mono: "Geist Mono", monospace;
+
+      --color-background: var(--color-white);
+      --color-foreground: var(--color-black);
+      --color-muted: var(--color-zinc-100);
+      --color-muted-foreground: var(--color-zinc-500);
+      --color-primary: var(--color-black);
+      --color-primary-foreground: var(--color-white);
+    }
+
+    @layer base {
+      *,
+      ::after,
+      ::before,
+      ::backdrop,
+      ::file-selector-button {
+        border-color: var(--color-zinc-200, currentColor);
+      }
+
+      body {
+        font-family: var(--font-mono);
+      }
+    }
+
+    @layer base {
+      
+    }
+    
+    @utility container {
+      margin-inline: auto;
+      padding-inline: 1.5rem;
+
+      @media (width >= theme(--breakpoint-lg)) {
+        max-width: var(--container-3xl);
+      }
+    }
+
+    .tab-active {
+      background-color: var(--color-foreground);
+      color: var(--color-background);
+    }
+  </style>
+  <title>Task List</title>
+</head>
+<body>
+  <main class="container space-y-6 py-24">
+    <div class="space-y-2">
+      <h1 class="text-2xl font-semibold">Todo List</h1>
+      <p class="text-muted-foreground">Organize daily tasks for better habits.</p>
+    </div>
+    <form id="task-form" class="grid gap-4">
+      <div>
+        <label for="task-name" class="hidden">Task name</label>
+        <input type="text" id="task-name" placeholder="Enter task name" class="h-10 w-full border px-4 text-base focus-visible:outline-primary focus-visible:outline-offset-4" required>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="w-full">
+          <label for="task-priority" class="hidden">Priority</label>
+          <select id="task-priority" class="h-10 w-full border pr-4 px-3 text-base focus-visible:outline-primary focus-visible:outline-offset-4" required>
+            <option value="">Choose a priority</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="w-full">
+          <label for="task-date" class="hidden">Task date</label>
+          <input type="date" id="task-date" class="h-10 w-full border px-3 text-base focus-visible:outline-primary focus-visible:outline-offset-4" required>
+        </div>
+      </div>
+      <button type="submit" class="px-4 py-2 font-medium bg-primary text-primary-foreground">Save</button>
+    </form>
+    <div class="flex items-center justify-between">
+      <div id="tabs" class="border border-primary max-w-fit">
+        <button id="all" class="px-4 py-2 font-medium tab-active">All</button>
+        <button id="planned" class="px-4 py-2 font-medium">Planned</button>
+        <button id="done" class="px-4 py-2 font-medium">Done</button>
+      </div>
+      <button id="bulk-delete" class="px-4 py-2 font-medium border">Delete All</button>
+    </div>
+    <ul id="todo-list" class="grid"></ul>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
