@@ -29,13 +29,25 @@
         border-color: var(--color-zinc-200, currentColor);
       }
 
-      body {
-        font-family: var(--font-mono);
+      :where(
+          a[href],
+          button,
+          input:not(
+              [type='text'],
+              [type='number'],
+              [type='password'],
+              [type=''],
+            ),
+          label[for],
+          select
+        ) {
+        cursor: pointer;
       }
-    }
 
-    @layer base {
-      
+      html {
+        font-family: var(--font-mono);
+        scroll-behavior: smooth;
+      }
     }
     
     @utility container {
@@ -46,29 +58,24 @@
         max-width: var(--container-3xl);
       }
     }
-
-    .tab-active {
-      background-color: var(--color-foreground);
-      color: var(--color-background);
-    }
   </style>
-  <title>Task List</title>
+  <title>Todo List</title>
 </head>
 <body>
   <main class="container space-y-6 py-24">
     <div class="space-y-2">
       <h1 class="text-2xl font-semibold">Todo List</h1>
-      <p class="text-muted-foreground">Organize daily tasks for better habits.</p>
+      <p class="text-muted-foreground text-sm md:text-base">Track and check tasks to build better habbits.</p>
     </div>
-    <form id="task-form" class="grid gap-4">
+    <form id="todo-form" class="grid gap-4">
       <div>
-        <label for="task-name" class="hidden">Task name</label>
-        <input type="text" id="task-name" placeholder="Enter task name" class="h-10 w-full border px-4 text-base focus-visible:outline-primary focus-visible:outline-offset-4" required>
+        <label for="todo-name" class="hidden">Todo name</label>
+        <input type="text" id="todo-name" placeholder="Enter todo" class="h-10 w-full border px-4 text-sm focus-visible:outline-primary focus-visible:outline-offset-4" required>
       </div>
-      <div class="flex items-center gap-4">
+      <div class="grid gap-4 md:grid-cols-2">
         <div class="w-full">
-          <label for="task-priority" class="hidden">Priority</label>
-          <select id="task-priority" class="h-10 w-full border pr-4 px-3 text-base focus-visible:outline-primary focus-visible:outline-offset-4" required>
+          <label for="todo-priority" class="hidden">Todo priority</label>
+          <select id="todo-priority" class="h-10 w-full border pr-4 px-3 text-sm focus-visible:outline-primary focus-visible:outline-offset-4" required>
             <option value="">Choose a priority</option>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
@@ -76,19 +83,19 @@
           </select>
         </div>
         <div class="w-full">
-          <label for="task-date" class="hidden">Task date</label>
-          <input type="date" id="task-date" class="h-10 w-full border px-3 text-base focus-visible:outline-primary focus-visible:outline-offset-4" required>
+          <label for="todo-date" class="hidden">Todo date</label>
+          <input type="date" id="todo-date" class="h-10 w-full border px-3 text-sm focus-visible:outline-primary focus-visible:outline-offset-4" required>
         </div>
       </div>
-      <button type="submit" class="px-4 py-2 font-medium bg-primary text-primary-foreground">Save</button>
+      <button type="submit" class="h-10 px-8 py-2 font-medium text-sm bg-primary text-primary-foreground">Save</button>
     </form>
-    <div class="flex items-center justify-between">
-      <div id="tabs" class="border border-primary max-w-fit">
-        <button id="all" class="px-4 py-2 font-medium tab-active">All</button>
-        <button id="planned" class="px-4 py-2 font-medium">Planned</button>
-        <button id="done" class="px-4 py-2 font-medium">Done</button>
+    <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
+      <div id="tabs" class="flex items-center justify-between w-full border-2 divide-x-2 md:w-fit">
+        <button id="all" data-active class="w-full px-4 py-2 font-medium text-sm text-muted-foreground data-active:text-primary">All</button>
+        <button id="planned" class="w-full px-4 py-2 font-medium text-sm text-muted-foreground data-active:text-foreground">Planned</button>
+        <button id="done" class="w-full px-4 py-2 font-medium text-sm text-muted-foreground data-active:text-foreground">Done</button>
       </div>
-      <button id="bulk-delete" class="px-4 py-2 font-medium border">Delete All</button>
+      <button id="bulk-delete" class="w-full px-4 py-2 border font-medium text-sm md:w-fit">Delete All</button>
     </div>
     <ul id="todo-list" class="grid"></ul>
   </main>
